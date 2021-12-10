@@ -4,7 +4,7 @@ const xhr = new XMLHttpRequest();
 // Create callback function
 xhr.onreadystatechange = function () {
   // If client received response from server
-  if (xhr.readyState === 4) {
+  if (xhr.readyState === 4 && xhr.status === 200) {
     // Returns a JS object
     const employees = JSON.parse(xhr.responseText);
 
