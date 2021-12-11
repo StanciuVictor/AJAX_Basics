@@ -5,8 +5,9 @@ const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   // If client received response from server
   if (xhr.readyState === 4 && xhr.status === 200) {
-    // Returns a JS object
+    // Returns a JS array of objects. The employees.json, but JS format
     const employees = JSON.parse(xhr.responseText);
+    // console.log(employees);
 
     // Create widget content
     let statusHTML = '<ul class="bulleted">';
