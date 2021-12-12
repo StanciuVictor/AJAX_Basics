@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax 1 - Text file</title>
+</head>
+
+<body>
+  <button id="button">Get Text File</button>
+  <br><br>
+  <div id='text'></div>
+
+  <script>
+    // Create event listener
+    document.getElementById('button').addEventListener('click', loadText);
+
+    function loadText() {
+      // Create xhr Object
+      const xhr = new XMLHttpRequest();
+
+      // OPEN - method, url/file, async
+      xhr.open('GET', 'sample2.txt', true);
+
+      console.log('READYSTATE: ', xhr.readyState);      // output: 1 (server connection established)
+
+      // OPTIONAL - used for loader - loading animations, round loading gif image, etc
+      xhr.onprogress = function () {
+        console.log('READYSTATE: ', xhr.readyState);    // output: 3 (processing request)
+      }
+
+      // Newer method - runs only on state 4
+      // .onload does not run unless it's at readyState 4
+      // Should also be used with .onerror
+      xhr.onload = function () {
+        // 'this' keyword refers to the xhr obj
+        if (this.status === 200) {
+          // console.log(this.responseText);
+          document.getElementById('text').innerHTML = this.responseText;
+        } else if (this.status === 404) {
+          // To simulate a 404, you first need to change the url/file in the .open() method
+          document.getElementById('text').innerHTML = 'Not Found';
+        }
+      };
+
+      xhr.onerror = function () {
+        console.log('Request Error...');
+      }
+
+      // // Older method - runs on every state 2 - 4
+      // xhr.onreadystatechange = function () {
+      //   console.log('READYSTATE: ', xhr.readyState);
+      //   // 'this' keyword refers to the xhr obj
+      //   if (this.readyState === 4 && this.status === 200) {
+      //     // console.log(this.responseText);
+      //     document.getElementById('text').innerHTML = this.responseText;
+      //   }
+      // }
+
+      // Sends request
+      xhr.send();
+    }
+
+    // HTTP Statuses
+    // 200: 'OK'
+    // 403: 'Forbidden'
+    // 404: 'Not Found'
+
+    // readystate Values
+    // 0: request not initialized
+    // 1: server connection established
+    // 2: request received
+    // 3: processing request
+    // 4: request finished and response is ready
+
+  </script>
+</body>
+
+</html>
